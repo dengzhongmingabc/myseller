@@ -1,6 +1,6 @@
 <template>
     <div>
-      善
+      1 goods
     </div>
 </template>
 
@@ -12,5 +12,5 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="stylus" ref="stylesheet/stylus">
 </style>

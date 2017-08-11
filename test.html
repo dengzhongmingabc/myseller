@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>mysell</title>
+    <style>
+      div{
+        height:100px;
+        position: relative;
+        border-top:1px solid red;
+      }
+      div::after{
+         position: absolute;
+         bottom: 0;
+         left: 55px;
+         right: 0;
+         content: '';
+         border-bottom: 1px solid #cccccc;
+         background-color: red;
+          -webkit-transform-origin: 0 100%;
+         transform-origin: 0 100%;  //最重要的是这两个
+          -webkit-transform: scaleY(.1);
+          transform: scaleY(.1);     //最重要的是这两个，设置纵向缩放50%
+       }
+    </style>
+  </head>
+  <body>
+  <div class="content">
+  </div>
+  </body>
+</html>
