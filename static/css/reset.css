@@ -82,6 +82,9 @@ li {
 
 html, body {
     width: 100%;
+    color:#fff;
+    font-size:10px;
+    font-weight:200;
 }
 
 body {
