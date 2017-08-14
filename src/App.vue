@@ -49,10 +49,9 @@
         this.showDetailDailog = false
       }
     },
-    created(){
+    beforeCreate(){
         this.$http.get('/api/seller').then(response => {
             if(NO_OK===response.body.errNo){
-              console.log(response.body)
               this.seller = response.body.data;
             }
         }, response => {

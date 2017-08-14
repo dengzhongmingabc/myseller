@@ -16,7 +16,7 @@
               </div>
             </div>
             <div class="suport-count" @click="showDailog">
-              <span class="suport-count-content">{{seller.supports.length}}个</span>
+              <span class="suport-count-content" v-if="seller.supports">{{seller.supports.length}}个</span>
               <i class="icon-keyboard_arrow_right"></i>
             </div>
           </div>
@@ -39,7 +39,7 @@
         },
         data () {
             return {
-                picMap:picMap
+                picMap:[]
             }
         },
         computed:{
