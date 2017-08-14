@@ -17,7 +17,7 @@
         <router-view></router-view>
       </keep-alive>
     </div>
-    <detail-dailog v-show="showDetailDailog" @closeDailog="closeDailog">
+    <detail-dailog :showDetailDailog="showDetailDailog" @closeDailog="closeDailog" name="fade">
       <detail-support :seller="seller"></detail-support>
     </detail-dailog>
   </div>

@@ -20,7 +20,7 @@
               <i class="icon-keyboard_arrow_right"></i>
             </div>
           </div>
-          <div class="header-bottion">
+          <div class="header-bottion" @click="showDailog">
             <span class="tell-icon">
             </span><p class="tell-content">{{seller.bulletin}}</p>
             <i class="icon-keyboard_arrow_right"></i>
@@ -154,6 +154,7 @@
         border-radius:14px
         bottom: 12px
         right: 12px
+        cursor:pointer
         .suport-count-content
           font-size:10px
           font-weight:200
@@ -161,6 +162,7 @@
           font-size:10px
           font-weight:200
     .header-bottion
+      cursor:pointer
       display:flex
       height: 28px
       padding:0 12px

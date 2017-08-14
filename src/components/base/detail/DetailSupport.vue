@@ -20,9 +20,12 @@
       </div>
       <div class="title-info">
         <hr class="hr-left">
-        <p class="info-title">优惠信息</p>
+        <p class="info-title">商家公告</p>
         <hr class="hr-right">
       </div>
+      <p class="tell-content">
+        {{seller.bulletin}}
+      </p>
     </div>
 </template>
 
@@ -60,6 +63,7 @@
 
 <style scoped lang="stylus" ref="stylesheet/stylus">
   @import "../../../common/stylus/mixin.styl"
+  path = '../../header/'
   .wrapper
     .seller-name
       text-align:center
@@ -99,38 +103,43 @@
         .decrease
           display:inline-block
           vertical-align:top
-          background-pic('decrease_1')
+          background-pic(path+'decrease_1')
           width:12px;
           height:12px
           background-size:12px 12px
         .discount
           display:inline-block
           vertical-align:top
-          background-pic('discount_1')
+          background-pic(path+'discount_1')
           width:12px;
           height:12px
           background-size:12px 12px
         .special
           display:inline-block
           vertical-align:top
-          background-pic('special_1')
+          background-pic(path+'special_1')
           width:12px;
           height:12px
           background-size:12px 12px
         .invoice
           display:inline-block
           vertical-align:top
-          background-pic('invoice_1')
+          background-pic(path+'invoice_1')
           width:12px;
           height:12px
           background-size:12px 12px
         .guarantee
           display:inline-block
           vertical-align:top
-          background-pic('guarantee_1')
+          background-pic(path+'guarantee_1')
           width:12px;
           height:12px
           background-size:12px 12px
         &:last-child
           margin-bottom:28px
+    .tell-content
+      margin:24px 48px 0 48px
+      font-size:12px
+      font-weight:200
+      line-height:24px
 </style>
