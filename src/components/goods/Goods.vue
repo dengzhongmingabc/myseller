@@ -19,16 +19,16 @@
                   <div v-if="food.description" class="food-description">{{food.description}}</div>
                   <div class="food-rating"><span class="sellCount">月售{{food.sellCount}}份</span><span class="rating">好评率{{food.rating}}%</span></div>
                   <div class="food-price"><span class="price">￥{{food.price}}</span><span v-if="food.oldPrice" class="old-price">￥{{food.oldPrice}}</span></div>
-                  <div class="conctr-wrap">
-                    <car-concrol></car-concrol>
-                  </div>
+                </div>
+                <div class="conctr-wrap">
+                  <car-concrol :food="food"></car-concrol>
                 </div>
               </li>
             </ul>
           </li>
         </ul>
       </div>
-      <shop-car></shop-car>
+      <shop-car :carGoods="goods"></shop-car>
     </div>
 </template>
 
@@ -47,7 +47,8 @@
             goods:[],
             picMap:[],
             scrollY:0,
-            listHeight:[]
+            listHeight:[],
+            goodInCar:[]
         }
     },
     created(){
@@ -210,6 +211,7 @@
         line-height: 26px
         padding-left:10px
       .foods-item
+        position:relative
         display:flex
         margin:18px
         padding-bottom:18px
@@ -223,7 +225,6 @@
           height: 57px
           width: 57px
         .food-content
-          position:relative
           flex:1
           width:100px
           display:inline-block
@@ -231,12 +232,6 @@
           overflow:hidden
           text-overflow:ellipsis
           white-space:nowrap
-          &.conctr-wrap
-            position:absolute
-            right: 0px
-            bottom:0px
-            height: 20px
-            width:40px
           .food-name
             margin:4px 0
             color:rgb(7,17,27)
@@ -268,5 +263,10 @@
               color:#93999F
               margin-left:8px
               text-decoration:line-through
+        .conctr-wrap
+          position:absolute
+          bottom: 9px;
+          right: -5px;
+          z-index:500
 
 </style>

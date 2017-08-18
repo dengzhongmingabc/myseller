@@ -7,7 +7,7 @@
           </div>
           <div v-if="goodCount>0" class="count">{{goodCount}}</div>
         </div>
-        <div class="total-price">
+        <div class="total-price" :class="{'price-lg-0':totalPrice>0}">
           ￥{{totalPrice}}
         </div>
       </div>
@@ -32,24 +32,27 @@
               default:20
           },
           carGoods:{
-            type:Array,
-            default:function () {
-              return [{id:1,count:1,price:30}]
-            }
+            type:Array
           }
         },
         computed:{
             goodCount(){
                 let count = 0;
-                this.carGoods.forEach((good)=>{
-                    count++;
+                this.carGoods.forEach((goods)=>{
+                  goods.foods.forEach((good)=>{
+                    let c = good.count?good.count:0
+                    count += c
+                  })
                 })
               return count;
             },
           totalPrice(){
             let totalPrice = 0;
-            this.carGoods.forEach((good)=>{
-              totalPrice+=good.price
+            this.carGoods.forEach((goods)=>{
+                goods.foods.forEach((good)=>{
+                  let c = good.count?good.count:0
+                  totalPrice += good.price*c
+                })
             })
             return totalPrice;
           },
@@ -124,6 +127,8 @@
         border-right:1px solid #2B343C
         padding-right:12px
         color:rgba(255,255,255,0.4)
+        &.price-lg-0
+          color:#ffffff
     .shop-car-center
       flex:1
       height: 48px
