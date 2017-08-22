@@ -1,0 +1,63 @@
+<script src="https://unpkg.com/vue"></script>
+<!--
+Velocity works very much like jQuery.animate and is
+a great option for JavaScript animations
+-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
+
+<div id="example-4">
+  <button @click="show = !show">
+    Toggle
+  </button>
+  <transition
+    v-on:before-enter="beforeEnter"
+    v-on:enter="enter"
+    v-on:after-enter="afterEnter"
+    v-bind:css="false"
+  >
+    <p v-if="show" style="background-color: red;width:100px;height:100px;color: white">
+      <transition
+        v-on:before-enter="beforeEnter1"
+        v-on:enter="enter1"
+        v-on:after-enter="afterEnter1"
+        v-bind:css="false"
+      >
+        <div id="inner" v-if="show">ccccc</div>
+      </transition>
+    </p>
+  </transition>
+</div>
+</div>
+
+
+<script>
+  new Vue({
+    el: '#example-4',
+    data: {
+      show: false
+    },
+    methods: {
+      beforeEnter: function (el) {
+
+        this.$nextTick(()=> {
+          Velocity(el, {translateX:'0px',translateY:'0px'}, { duration: 0 })
+        })
+      },
+      enter: function (el, done) {
+        Velocity(el, {translateX:'800px',translateY:'0px' }, { duration: 2000,complete: done})
+      },
+      afterEnter: function (el) {
+      },
+      beforeEnter1: function (el) {
+        this.$nextTick(()=> {
+          Velocity(el, {translateX:'0px',translateY:'0px'}, { duration: 0 })
+        })
+      },
+      enter1: function (el, done) {
+        Velocity(el, {translateX:'0px',translateY:'800px' }, { duration: 2000,complete: done })
+      },
+      afterEnter1: function (el) {
+      }
+    }
+  })
+</script>

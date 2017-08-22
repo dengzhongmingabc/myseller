@@ -10,6 +10,18 @@
         <div class="total-price" :class="{'price-lg-0':totalPrice>0}">
           ￥{{totalPrice}}
         </div>
+
+          <div class="ball-wrap">
+            <transition
+              v-on:before-enter="beforeEnter"
+              v-on:enter="enter"
+              v-on:after-enter="afterEnter"
+            >
+              <div class="ball" v-if="ball.show"></div>
+            </transition>
+          </div>
+
+
       </div>
       <div class="shop-car-center">
         另需配送费￥{{sendPay}}元
@@ -21,6 +33,7 @@
 </template>
 
 <script>
+  import  Velocity from 'velocity-animate'
     export default {
         props:{
           sendPay:{
@@ -33,6 +46,11 @@
           },
           carGoods:{
             type:Array
+          }
+        },
+        data(){
+          return {
+              ball:{show:false}
           }
         },
         computed:{
@@ -65,6 +83,28 @@
             }else{
                 return "去结算"
             }
+          }
+        },
+        methods:{
+          addGoodInCar(data){
+              if(this.ball.show){
+                  return
+              }
+            this.ball.ele = data.el
+            this.ball.show=true
+          },
+          beforeEnter: function (el) {
+            let rects = this.ball.ele.getBoundingClientRect();
+            let recte = el.getBoundingClientRect();
+            let x = rects.left-32
+            let y = -(window.innerHeight-rects.bottom-32)
+            Velocity(el, {translateX:`${x}px`,translateY:`${y}px` }, { duration: 0 })
+          },
+          enter: function (el, done) {
+            Velocity(el, { translateX:['0px','linear'],translateY:['0px',[.65,-0.51,.95,.46]] },{ duration: 300  ,complete: done })
+          },
+          afterEnter: function (el) {
+            this.ball.show=false
           }
         }
     }
@@ -129,6 +169,16 @@
         color:rgba(255,255,255,0.4)
         &.price-lg-0
           color:#ffffff
+      .ball-wrap
+        position:fixed
+        left: 32px
+        bottom:32px
+        z-index:300
+        .ball
+          height: 20px
+          width: 20px
+          border-radius:50%
+          background-color:#00A0DC
     .shop-car-center
       flex:1
       height: 48px
@@ -147,4 +197,5 @@
       font-weight:700
       &.enough
         background-color:green
+        color:#ffffff
 </style>

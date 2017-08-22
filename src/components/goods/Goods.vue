@@ -18,17 +18,18 @@
                   <div class="food-name">{{food.name}}</div>
                   <div v-if="food.description" class="food-description">{{food.description}}</div>
                   <div class="food-rating"><span class="sellCount">月售{{food.sellCount}}份</span><span class="rating">好评率{{food.rating}}%</span></div>
-                  <div class="food-price"><span class="price">￥{{food.price}}</span><span v-if="food.oldPrice" class="old-price">￥{{food.oldPrice}}</span></div>
-                </div>
-                <div class="conctr-wrap">
-                  <car-concrol :food="food"></car-concrol>
+                  <div class="food-price"><span class="price">￥{{food.price}}</span><span v-if="food.oldPrice" class="old-price">￥{{food.oldPrice}}</span>
+                    <div class="conctr-wrap">
+                      <car-concrol :food="food" @addGoodInCar="addGoodInCar"></car-concrol>
+                    </div>
+                  </div>
                 </div>
               </li>
             </ul>
           </li>
         </ul>
       </div>
-      <shop-car :carGoods="goods"></shop-car>
+      <shop-car :carGoods="goods" ref="carGoods"></shop-car>
     </div>
 </template>
 
@@ -84,6 +85,9 @@
       }
     },
     methods: {
+      addGoodInCar(el){
+        this.$refs.carGoods.addGoodInCar(el)
+      },
       _initScroll() {
         this.meunScroll = new BScroll(this.$refs.menuwrapper, {
           click: true
@@ -252,6 +256,7 @@
             .sellCount
               margin-right:8px
           .food-price
+            position:relative
             margin:4px 0
             height:14px
             color:#F01414
@@ -263,10 +268,12 @@
               color:#93999F
               margin-left:8px
               text-decoration:line-through
-        .conctr-wrap
-          position:absolute
-          bottom: 9px;
-          right: -5px;
-          z-index:500
+            .conctr-wrap
+              position:absolute
+              color:#93999F
+              bottom: -10px;
+              right: -4px;
+              z-index:500
+
 
 </style>

@@ -1,10 +1,10 @@
 <template>
     <div class="concrol-wrap">
       <transition name="fade">
-          <div v-show="foodCount>0" class="decrease" @click="decrease">
+          <div v-show="foodCount>0" class="decrease" @click="decrease($event)">
             <i class="icon-remove_circle_outline"></i>
-          </div></transition><div class="count">{{foodCount}}
-    </div><div class="add" @click="add">
+          </div></transition><div class="count" v-show="foodCount>0">{{foodCount}}
+    </div><div class="add" @click="add($event)">
         <i class="icon-add_circle"></i>
       </div>
     </div>
@@ -31,14 +31,22 @@
           }
       },
       methods:{
-        add(){
-            if(this.food.count){
-                this.food.count++;
-            }else{
-              this.$set(this.food,'count',1)
-            }
+        add(event){
+          if (!event._constructed){
+            return;
+          }
+          if(this.food.count){
+              this.food.count++;
+          }else{
+            this.$set(this.food,'count',1)
+          }
+
+          this.$emit('addGoodInCar',{'el':event.target})
         },
-        decrease(){
+        decrease(event){
+          if (!event._constructed){
+            return;
+          }
           if(this.food.count&&this.food.count>0){
             this.food.count--;
           }
@@ -53,7 +61,7 @@
   }
   .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
     opacity: 1;
-    transform: translateX(50px) rotate(360deg);
+    transform: translateX(30px) rotate(360deg);
   }
   .concrol-wrap
     text-align:right
