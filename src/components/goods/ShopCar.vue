@@ -38,7 +38,7 @@
           <ul>
             <li v-for="item in goodsInCar" class="good-in-car-li botton-1px">
               <div class="car-good-name">{{item.name}}</div>
-              <div class="car-good-price">{{item.price*item.count}}</div>
+              <div class="car-good-price">￥{{item.price*item.count}}</div>
               <div class="car-good-control"><car-concrol :food="item" @addGoodInCar="addGoodInCar"></car-concrol></div>
             </li>
           </ul>
@@ -298,7 +298,7 @@
         flex:1
         cursor:pointer
     .shop-content
-      max-height:100px
+      max-height:265px
       background-color:white
       color:rgb(7,17,27)
       font-size:14px
@@ -306,19 +306,32 @@
       width:100%
       overflow:hidden
       padding-left:10px
+      padding-right:10px
+      box-sizing:border-box
       .good-in-car-li
         display:flex
         width:100%
         botton-1px(rgba(7,17,21,0.1))
         .car-good-name
           display inline-block
-          width:80px
+          width:120px
+          height: 48px
+          line-height:48px
+          font-size: 14px
+          color:rgb(7,17,27)
         .car-good-price
           display inline-block
+          height: 48px
+          line-height:48px
+          text-align:right
+          padding-right:10px
+          color:red
           flex:1
         .car-good-control
           display inline-block
+          height: 48px
           width:80px
+          margin-top:9px
   .mast
     position:fixed
     bottom: 0px
