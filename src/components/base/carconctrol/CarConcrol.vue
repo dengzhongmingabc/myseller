@@ -36,7 +36,7 @@
             return;
           }
           if(this.food.count){
-              this.food.count++;
+              this.food.count+=1;
           }else{
             this.$set(this.food,'count',1)
           }
@@ -48,7 +48,7 @@
             return;
           }
           if(this.food.count&&this.food.count>0){
-            this.food.count--;
+            this.food.count-=1;
           }
         }
       }
