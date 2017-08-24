@@ -30,6 +30,7 @@
         </ul>
       </div>
       <shop-car :carGoods="goods" ref="carGoods"></shop-car>
+      <good-detail></good-detail>
     </div>
 </template>
 
@@ -37,11 +38,13 @@
   import BScroll from 'better-scroll'
   import ShopCar from './ShopCar.vue'
   import CarConcrol from '../base/carconctrol/CarConcrol.vue'
+  import GoodDetail from './GoodDetail.vue'
   const NO_OK = 0
   export default {
     components:{
       ShopCar,
-      CarConcrol
+      CarConcrol,
+      GoodDetail
     },
     data () {
         return {

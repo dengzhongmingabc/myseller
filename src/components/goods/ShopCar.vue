@@ -138,11 +138,12 @@
             if(this.shopcarlistshow){
               this.$nextTick(()=>{
                 if(this.bs){
-                  this.bs.destroy()
+                  this.bs.refresh()
+                }else{
+                  this.bs = new BScroll(this.$refs.shopcontent, {
+                    click: true
+                  });
                 }
-                this.bs = new BScroll(this.$refs.shopcontent, {
-                  click: true
-                });
               })
             }
           },
