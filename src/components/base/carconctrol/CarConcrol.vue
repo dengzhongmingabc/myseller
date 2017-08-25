@@ -1,10 +1,10 @@
 <template>
     <div class="concrol-wrap">
       <transition name="fade">
-          <div v-show="foodCount>0" class="decrease" @click="decrease($event)">
+          <div v-show="foodCount>0" class="decrease" @click.stop="decrease($event)">
             <i class="icon-remove_circle_outline"></i>
           </div></transition><div class="count" v-show="foodCount>0">{{foodCount}}
-    </div><div class="add" @click="add($event)">
+    </div><div class="add" @click.stop="add($event)">
         <i class="icon-add_circle"></i>
       </div>
     </div>
@@ -33,19 +33,18 @@
       methods:{
         add(event){
           if (!event._constructed){
-            return;
+            //return;
           }
           if(this.food.count){
               this.food.count+=1;
           }else{
             this.$set(this.food,'count',1)
           }
-
           this.$emit('addGoodInCar',{'el':event.target})
         },
         decrease(event){
           if (!event._constructed){
-            return;
+            //return;
           }
           if(this.food.count&&this.food.count>0){
             this.food.count-=1;

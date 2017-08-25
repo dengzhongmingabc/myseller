@@ -12,7 +12,7 @@
           <li v-for="item in goods" class="typeli">
             <div class="title">{{item.name}}</div>
             <ul>
-              <li v-for="food in item.foods" class="foods-item botton-1px botton-1px-none">
+              <li v-for="food in item.foods" class="foods-item botton-1px botton-1px-none" @click="showDetail(food)">
                 <img :src="food.icon" class="food-icon">
                 <div class="food-content">
                   <div class="food-name">{{food.name}}</div>
@@ -30,7 +30,7 @@
         </ul>
       </div>
       <shop-car :carGoods="goods" ref="carGoods"></shop-car>
-      <good-detail></good-detail>
+      <good-detail :detailShow="detailShow" @dtlBack="dtlBack" :goodDtl="goodDtl" @addGoodInCar="addGoodInCar"></good-detail>
     </div>
 </template>
 
@@ -52,7 +52,9 @@
             picMap:[],
             scrollY:0,
             listHeight:[],
-            goodInCar:[]
+            goodInCar:[],
+            detailShow:false,
+            goodDtl:{}
         }
     },
     created(){
@@ -88,7 +90,15 @@
       }
     },
     methods: {
+      dtlBack(){
+        this.detailShow = false
+      },
+      showDetail(food){
+        this.goodDtl = food
+        this.detailShow = true
+      },
       addGoodInCar(el){
+        console.log(el)
         this.$refs.carGoods.addGoodInCar(el)
       },
       _initScroll() {
