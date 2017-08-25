@@ -271,7 +271,7 @@
     left: 0px
     bottom:48px
     width:100%
-    z-index:1
+    z-index:62
     &.listshow-enter-active, &.listshow-leave-active
       transition: all .5s
     &.listshow-enter, &.listshow-leave-to
@@ -341,7 +341,7 @@
     height:100%
     background-color:rgba(7,17,27,0.6)
     blur:10px
-    z-index:0
+    z-index:61
     &.mastshow-enter-active, &.mastshow-leave-active
       transition: all .5s
     &.mastshow-enter, &.mastshow-leave-to
