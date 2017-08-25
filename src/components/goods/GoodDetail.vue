@@ -163,6 +163,7 @@
                 width: 70px
                 background-color:rgb(0,160,220)
                 vertical-align:top
+                text-align:center
                 font-size:10px
                 color:#ffffff
               .right-button
