@@ -1,41 +1,50 @@
 <template>
   <transition name="fade">
-    <div class="dtl" v-show="detailShow">
-      <div class="dtl-header">
-        <div class="good-pic">
-          <img :src="goodDtl.image" alt="">
-          <i class="icon-arrow_lift icon-arrow" @click.stop="back"></i>
-        </div>
-        <div class="good-content">
-          <div class="good-content-top">
-            <h1 class="good-name">{{goodDtl.name}}</h1>
-            <span class="sell-count">月售{{goodDtl.sellCount}}份</span>
-            <span class="good-ratting">好评率{{goodDtl.rating}}%</span>
+    <div class="dtl" v-show="detailShow" ref="dtlshow">
+      <div>
+        <div class="dtl-header">
+          <div class="good-pic">
+            <img :src="goodDtl.image" alt="">
+            <i class="icon-arrow_lift icon-arrow" @click.stop="back"></i>
           </div>
-          <div class="good-content-bottom">
-            <div class="good-price">
-              <span class="price">￥{{goodDtl.price}}</span>
-              <span class="old-price" v-if="goodDtl.oldPrice">￥{{goodDtl.oldPrice}}</span>
+          <div class="good-content">
+            <div class="good-content-top">
+              <h1 class="good-name">{{goodDtl.name}}</h1>
+              <span class="sell-count">月售{{goodDtl.sellCount}}份</span>
+              <span class="good-ratting">好评率{{goodDtl.rating}}%</span>
             </div>
-            <div class="controll-wrap">
-              <div class="add-good" v-show="!goodDtl.count||goodDtl.count===0" @click="addGoodFirst($event)">
-                <div class="left-button"></div><div class="center-button">加入购物车</div><div class="right-button"></div></div>
-              <car-concrol v-show="goodDtl.count&&goodDtl.count>0" :food="goodDtl" @addGoodInCar="addGoodInCar"></car-concrol>
+            <div class="good-content-bottom">
+              <div class="good-price">
+                <span class="price">￥{{goodDtl.price}}</span>
+                <span class="old-price" v-if="goodDtl.oldPrice">￥{{goodDtl.oldPrice}}</span>
+              </div>
+              <div class="controll-wrap">
+                <div class="add-good" v-show="!goodDtl.count||goodDtl.count===0" @click="addGoodFirst($event)">
+                  <div class="left-button"></div><div class="center-button">加入购物车</div><div class="right-button"></div></div>
+                <car-concrol v-show="goodDtl.count&&goodDtl.count>0" :food="goodDtl" @addGoodInCar="addGoodInCar"></car-concrol>
+              </div>
             </div>
           </div>
         </div>
+        <div class="dtl-introduce">
+          <h1>商品介绍</h1>
+          <p v-if="goodDtl.info">{{goodDtl.info}}</p>
+          <p v-if="!goodDtl.info">暂无介绍</p>
+        </div>
+        <rating :ratings="goodDtl.ratings"></rating>
       </div>
-      <div class="dtl-introduce"></div>
-      <div class="dtl-reting"></div>
     </div>
   </transition>
 </template>
 
 <script>
   import CarConcrol from '../base/carconctrol/CarConcrol.vue'
+  import BScroll from 'better-scroll'
+  import Rating from '../base/Ratings.vue'
   export default {
     components:{
-      CarConcrol
+      CarConcrol,
+      Rating
     },
     props:{
       detailShow:{
@@ -52,8 +61,24 @@
     },
     data () {
         return {
-            addButtonShow:true
+            addButtonShow:true,
+            scroll:undefined
         }
+    },
+    watch: {
+      detailShow: function (val, oldVal) {
+        if(val){
+          this.$nextTick(()=>{
+              if(!this.scroll){
+                this.scroll = new BScroll(this.$refs.dtlshow, {
+                  click: true
+                });
+              }else{
+                  this.scroll.refresh()
+              }
+          })
+        }
+      }
     },
     methods:{
       addGoodInCar(el){
@@ -83,8 +108,9 @@
     width:100%
     height:100%
     z-index:60
-    background-color:#cccccc
+    background-color:#f3f5f7
     color:red
+    overflow:hidden
     .dtl-header
       position:relative
       width:100%
@@ -176,4 +202,23 @@
 
 
 
+    .dtl-introduce
+      background-color: #ffffff
+      margin-top: 16px
+      padding:18px
+      h1
+        font-size: 14px
+        font-weight:200
+        color:rgb(7,17,27)
+        margin-bottom:6px
+      p
+        font-size: 10px
+        font-weight:200
+        color:rgb(77,85,93)
+        padding-left:8px
+        line-height:24px
+    .dtl-reting
+      background-color: #ffffff
+      margin-top: 16px
+      padding:18px
 </style>
