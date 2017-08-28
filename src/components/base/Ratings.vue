@@ -16,8 +16,7 @@
         <ul>
           <li v-for="rat in retingsList">
             <div class="info-wrap">
-              <div></div>
-              <div class="time">{{rat.rateTime}}</div>
+              <div class="time">{{rat.rateTime | formmat}}</div>
               <div class="username">{{rat.username}}</div>
               <div class="pic-wrap">
                 <img :src="rat.avatar" class="pic" alt="">
@@ -32,7 +31,7 @@
 </template>
 
 <script>
-  import {formmat} from '../../common/js/common'
+  import {timeFormmat} from '../../common/js/common'
     const allList = 1;//全部
     const recommList = 2; //推荐
     const againstList = 3;//吐槽
@@ -111,6 +110,12 @@
     }
 
         },
+      filters:{
+            formmat(time){
+              return timeFormmat((new Date(time)),"yyyy-MM-dd hh:mm");
+            }
+
+      },
         methods:{
           allClick(){
             this.type = allList
@@ -174,7 +179,7 @@
         vertical-align:bottom
         cursor:pointer
       .contentselected
-        color:rgb(0,160,220)
+        color:green
       .select-content
         display:inline-block
         font-size:12px
