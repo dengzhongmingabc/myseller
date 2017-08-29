@@ -6,10 +6,10 @@
         <router-link to="/goods">商品</router-link>
       </div>
       <div class="tab-item">
-        <router-link to="/malls">评论</router-link>
+        <router-link to="/ratings">评论</router-link>
       </div>
       <div class="tab-item">
-        <router-link to="/ratings">商家</router-link>
+        <router-link to="/malls">商家</router-link>
       </div>
     </div>
     <div>
