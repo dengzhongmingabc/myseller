@@ -1,5 +1,6 @@
 <template>
-    <div class="mall-rating">
+    <div class="mall-rating" ref="ratingShow">
+      <div >
       <div class="header">
         <div class="left">
           <p class="score">{{seller.score}}</p>
@@ -24,23 +25,27 @@
         </div>
       </div>
       <div class="rating-list">
+        <mall-ratings :ratings="ratings"></mall-ratings>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
     import BScroll from 'better-scroll'
     import Starts from '../../components/base/detail/Starts.vue'
+    import MallRatings from '../base/MallRatings.vue'
     const NO_OK = 0
     export default {
       components:{
-        Starts
+        Starts,MallRatings
       },
         data () {
             return {
               ratings:[],
               seller:{},
-              startType:36
+              startType:36,
+              scroll:undefined
             }
         },
       created(){
@@ -49,8 +54,6 @@
           if(res.errNo === NO_OK){
             this.ratings = res.data
           }
-          this.$nextTick(()=>{
-          })
         });
         this.$http.get("/api/seller").then((res) => {
           res = res.body
@@ -58,6 +61,14 @@
             this.seller = res.data
           }
           this.$nextTick(()=>{
+            if(!this.scroll){
+              console.log(this.scroll);
+              this.scroll = new BScroll(this.$refs.ratingShow, {
+                click: true
+              });
+            }else{
+              this.scroll.refresh()
+            }
           })
         })
       }
@@ -70,6 +81,7 @@
     top: 175px
     bottom: 0px
     width:100%
+    z-index:-100
     overflow:hidden
     background-color:#f3f5f7
     .header
