@@ -59,18 +59,17 @@
           res = res.body
           if(res.errNo === NO_OK){
             this.seller = res.data
+            this.$nextTick(()=>{
+              console.log(this.$refs.ratingShow);
+              if(!this.scroll){
+                this.scroll = new BScroll(this.$refs.ratingShow, {
+                  click: true
+                });
+              }
+            })
           }
-          this.$nextTick(()=>{
-            if(!this.scroll){
-              console.log(this.scroll);
-              this.scroll = new BScroll(this.$refs.ratingShow, {
-                click: true
-              });
-            }else{
-              this.scroll.refresh()
-            }
-          })
         })
+
       }
     }
 </script>
