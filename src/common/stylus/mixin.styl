@@ -10,5 +10,9 @@ botton-1px($color)
 background-pic($name)
   background:url($name+'@2x.png') no-repeat
   @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3)
-      background:url($name+'@2x.png') no-repeat
+      background:url($name+'@3x.png') no-repeat
 
+background-pic-big($name)
+  background:url($name+'@2x.png') no-repeat
+  @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3)
+    background:url($name+'@3x.png') no-repeat

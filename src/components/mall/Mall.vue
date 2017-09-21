@@ -32,13 +32,26 @@
         </div>
       </div>
       <div class="notice-favourable">
-        <div class="notice">
+        <div class="notice border-1px">
           <h1 class="notice-title">公告与活动</h1>
           <p class="notice-content">{{seller.bulletin}}</p>
         </div>
-        <div class="favourable"></div>
+        <div class="favourable">
+          <ul>
+            <li v-for="(item,index) in seller.supports" class="fav" :class="{'border-px border-1px':index<seller.supports.length-1}">
+              <i :class="picMap[item.type]" class="icon-class"></i><span class="supports-content">{{item.description}}</span>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="mall-pics"></div>
+      <div class="mall-pics">
+        <div class="pic-title">商家实景</div>
+        <ul class="pics">
+          <li class="pic-item" v-for="item in seller.pics">
+            <img :src="item" class="item-class" alt="">
+          </li>
+        </ul>
+      </div>
       <div class="mall-info"></div>
     </div>
 </template>
@@ -53,10 +66,12 @@
       },
         data () {
             return {
-                seller:{}
+                seller:{},picMap:[]
+
             }
         },
       created(){
+        this.picMap = ['decrease','discount','special','invoice','guarantee']
         this.$http.get("/api/seller").then((res) => {
           res = res.body
           if(res.errNo === NO_OK){
@@ -77,6 +92,7 @@
 
 <style scoped lang="stylus" ref="stylesheet/stylus">
   @import "../../common/stylus/mixin.styl"
+  path = '../header/'
   .mall
     position:absolute
     top: 175px
@@ -160,14 +176,61 @@
       background-color: #ffffff
       color:rgb(240,20,20)
       .notice
+        botton-1px(rgba(7,17,21,0.1))
         .notice-title
           color:rgb(7,17,27)
           font-size: 14px
           line-height:14px
           margin-bottom:8px
         .notice-content
-          padding:0 12px
+          padding:0 12px 16px 12px
           font-size: 12px
           font-weight:200
           line-height:24px
+      .favourable
+        .border-px
+          botton-1px(rgba(7,17,21,0.1))
+        .fav
+          padding:18px 12px
+          color:rgb(7,17,27)
+          font-size: 12px
+          font-weight:200
+          line-height:16px
+          .decrease
+            background-pic-big(path+'decrease_3')
+          .discount
+            background-pic-big(path+'discount_3')
+          .special
+            background-pic-big(path+'special_3')
+          .invoice
+            background-pic-big(path+'invoice_3')
+          .guarantee
+            background-pic-big(path+'guarantee_3')
+          .decrease,.discount,.special,.invoice,.guarantee
+            display:inline-block
+            vertical-align:top
+            width:18px;
+            height:18px
+            background-size:18px 18px
+            margin-right:6px
+    .mall-pics
+      width:600px
+      margin-top:28px
+      padding:18px
+      background-color: #ffffff
+      color:rgb(240,20,20)
+      .pic-title
+        color:rgb(7,17,27)
+        font-size: 14px
+        line-height:14px
+        margin-bottom:8px
+      .pics
+        .pic-item
+          display:inline-block
+          width:120px
+          height:80px
+          background-size:100% 100%
+          .item-class
+            width:120px
+            height:90px
 </style>
