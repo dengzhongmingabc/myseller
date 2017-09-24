@@ -65,7 +65,9 @@
                 this.scroll = new BScroll(this.$refs.ratingShow, {
                   click: true
                 });
-              }
+              }else{
+              this.scroll.refresh()
+            }
             })
           }
         })
