@@ -1,36 +1,37 @@
 <template>
-    <div class="mall">
+    <div class="mall" ref="mallShow">
+      <div>
       <div class="mall-header">
-        <div class="top border-1px">
-          <div class="top-left">
-            <h1 class="mall-name">{{seller.name}}</h1>
-            <div class="star-wrap"><starts :score="seller.score" :startType="36"></starts></div>
-            <span class="rating-count">({{seller.ratingCount}})</span>
-            <span class="seller-count">月售{{seller.sellCount}}单</span>
+          <div class="top border-1px">
+            <div class="top-left">
+              <h1 class="mall-name">{{seller.name}}</h1>
+              <div class="star-wrap"><starts :score="seller.score" :startType="36"></starts></div>
+              <span class="rating-count">({{seller.ratingCount}})</span>
+              <span class="seller-count">月售{{seller.sellCount}}单</span>
+            </div>
+            <div class="top-right">
+              <i class="hart icon-favorite"></i>
+              <div class="hart-tag">收藏</div>
+            </div>
           </div>
-          <div class="top-right">
-            <i class="hart icon-favorite"></i>
-            <div class="hart-tag">收藏</div>
+          <div class="bottom">
+            <div class="bottom-left">
+              <div class="title">起送价</div>
+              <span class="data">{{seller.minPrice}}</span>
+              <span class="cell">元</span>
+            </div>
+            <div class="bottom-center">
+              <div class="title">商家配送</div>
+              <span class="data">{{seller.deliveryPrice}}</span>
+              <span class="cell">元</span>
+            </div>
+            <div class="bottom-right">
+              <div class="title">平均配送时间</div>
+              <span class="data">{{seller.deliveryTime}}</span>
+              <span class="cell">分钟</span>
+            </div>
           </div>
         </div>
-        <div class="bottom">
-          <div class="bottom-left">
-            <div class="title">起送价</div>
-            <span class="data">{{seller.minPrice}}</span>
-            <span class="cell">元</span>
-            </div>
-          <div class="bottom-center">
-            <div class="title">商家配送</div>
-            <span class="data">{{seller.deliveryPrice}}</span>
-            <span class="cell">元</span>
-            </div>
-          <div class="bottom-right">
-            <div class="title">平均配送时间</div>
-            <span class="data">{{seller.deliveryTime}}</span>
-            <span class="cell">分钟</span>
-            </div>
-        </div>
-      </div>
       <div class="notice-favourable">
         <div class="notice border-1px">
         <h1 class="notice-title">公告与活动</h1>
@@ -42,17 +43,40 @@
               <i :class="picMap[item.type]" class="icon-class"></i><span class="supports-content">{{item.description}}</span>
             </li>
           </ul>
+        <div class="notice-favourable">
+          <div class="notice border-1px">
+            <h1 class="notice-title">公告与活动</h1>
+            <p class="notice-content">{{seller.bulletin}}</p>
+          </div>
+          <div class="favourable">
+            <ul>
+              <li v-for="(item,index) in seller.supports" class="fav" :class="{'border-px border-1px':index<seller.supports.length-1}">
+                <i :class="picMap[item.type]" class="icon-class"></i><span class="supports-content">{{item.description}}</span>
+              </li>
+            </ul>
+          </div>
         </div>
+       </div>
       </div>
       <div class="mall-pics">
         <div class="pic-title">商家实景</div>
-        <ul class="pics">
-          <li class="pic-item" v-for="item in seller.pics">
-            <img :src="item" class="item-class" alt="">
+        <div ref="picsShow" class="pic-wrap">
+          <ul class="pics" ref="picsList">
+            <li class="pic-item" v-for="item in seller.pics" >
+              <img :src="item" class="item-class" alt="">
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="mall-info">
+        <div class="title">商家信息</div>
+        <ul class="info-wrap">
+          <li class="info"  v-for="(item,index) in seller.infos" :class="{'border-px border-1px':index<seller.infos.length-1}">
+            {{item}}
           </li>
         </ul>
       </div>
-      <div class="mall-info"></div>
+     </div>
     </div>
 </template>
 
@@ -66,24 +90,68 @@
       },
         data () {
             return {
-                seller:{},picMap:[]
+              seller:{},
+              picMap:[]
 
             }
         },
+      mounted(){
+        this.$nextTick(()=> {
+          if (!this.scroll) {
+            this.scroll = new BScroll(this.$refs.mallShow, {
+              click: true
+            });
+          } else {
+            this.scroll.refresh()
+          }
+        })
+        this.$nextTick(()=>{
+          let listWidth = 0.0
+          if(this.seller.pics){
+            listWidth = this.seller.pics.length*128-8;
+          }
+          this.$refs.picsList.style.width=listWidth+"px"
+          if(!this.scrollpic){
+            this.scrollpic = new BScroll(this.$refs.picsShow, {
+                scrollX:true,
+              eventPassthrough:'vertical'
+            });
+          }else{
+            this.scrollpic.refresh()
+          }
+        })
+      },
       created(){
         this.picMap = ['decrease','discount','special','invoice','guarantee']
         this.$http.get("/api/seller").then((res) => {
           res = res.body
           if(res.errNo === NO_OK){
             this.seller = res.data
-           /* this.$nextTick(()=>{
+           this.$nextTick(()=>{
               console.log(this.$refs.mallShow);
               if(!this.scroll){
                 this.scroll = new BScroll(this.$refs.mallShow, {
                   click: true
                 });
+              }else{
+                this.scroll.refresh()
               }
-            })*/
+            })
+            this.$nextTick(()=>{
+              let listWidth = 0.0
+              if(this.seller.pics){
+                listWidth = this.seller.pics.length*128-8;
+              }
+              this.$refs.picsList.style.width=listWidth+"px"
+              if(!this.scrollpic){
+                this.scrollpic = new BScroll(this.$refs.picsShow, {
+                  scrollX:true,
+                  eventPassthrough:'vertical'
+                });
+              }else{
+                this.scrollpic.refresh()
+              }
+            })
           }
         })
       }
@@ -99,7 +167,7 @@
     bottom: 0px
     left:0px
     right:0px
-    //overflow:hidden
+    overflow:hidden
     background-color:#f3f5f7
     box-sizing:content-box
     .mall-header
@@ -214,8 +282,7 @@
             background-size:18px 18px
             margin-right:6px
     .mall-pics
-      width:600px
-      margin-top:28px
+      margin-top:18px
       padding:18px
       overflow-x:hidden
       background-color: #ffffff
@@ -225,14 +292,41 @@
         font-size: 14px
         line-height:14px
         margin-bottom:8px
-      .pics
-        .pic-item
-          display:inline-block
-          width:120px
-          height:80px
-          background-size:100% 100%
-          .item-class
+      .pic-wrap
+        overflow:hidden
+        .pics
+          white-space: nowrap
+          .pic-item
+            display:inline-block
             width:120px
             height:90px
-    
+            background-size:100% 100%
+            margin-right:8px
+            .item-class
+              width:120px
+              height:90px
+
+    .mall-info
+      margin-top:18px
+      padding:18px
+      background-color: #ffffff
+      color:rgb(240,20,20)
+      .title
+        color:rgb(7,17,27)
+        font-size: 14px
+        line-height:14px
+        margin-bottom:8px
+      .info-wrap
+        padding:0 0px 16px 0px
+        font-size: 12px
+        font-weight:200
+        line-height:24px
+        .info
+          padding:18px 12px
+          color:rgb(7,17,27)
+          font-size: 12px
+          font-weight:200
+          line-height:16px
+        .border-px
+          botton-1px(rgba(7,17,21,0.1))
 </style>
