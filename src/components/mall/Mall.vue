@@ -33,9 +33,9 @@
       </div>
       <div class="notice-favourable">
         <div class="notice border-1px">
-          <h1 class="notice-title">公告与活动</h1>
-          <p class="notice-content">{{seller.bulletin}}</p>
-        </div>
+        <h1 class="notice-title">公告与活动</h1>
+        <p class="notice-content">{{seller.bulletin}}</p>
+      </div>
         <div class="favourable">
           <ul>
             <li v-for="(item,index) in seller.supports" class="fav" :class="{'border-px border-1px':index<seller.supports.length-1}">
@@ -217,6 +217,7 @@
       width:600px
       margin-top:28px
       padding:18px
+      overflow-x:hidden
       background-color: #ffffff
       color:rgb(240,20,20)
       .pic-title
@@ -233,4 +234,5 @@
           .item-class
             width:120px
             height:90px
+    
 </style>
